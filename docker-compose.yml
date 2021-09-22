@@ -1,9 +1,11 @@
 version: "3.9"
+
 services:
   app:
     build: ./docker/php
     volumes:
       - ./src:/rindoku
+
   web:
     image: nginx:1.20-alpine
     ports:
@@ -14,3 +16,11 @@ services:
     working_dir: /rindoku
     depends_on:
       - app
+
+  db:
+    build: ./docker/mysql
+    volumes:
+      - db-store:/var/lib/mysql
+
+volumes:
+  db-store:
