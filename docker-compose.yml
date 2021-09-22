@@ -4,3 +4,13 @@ services:
     build: ./docker/php
     volumes:
       - ./src:/rindoku
+  web:
+    image: nginx:1.20-alpine
+    ports:
+      - 8080:80
+    volumes:
+      - ./src:/rindoku
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    working_dir: /rindoku
+    depends_on:
+      - app
